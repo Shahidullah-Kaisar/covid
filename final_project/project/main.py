@@ -97,6 +97,35 @@ class Bookingpatient(db.Model):
     paddress=db.Column(db.String(100))
 
 
+class Contact(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), nullable=False)
+    message = db.Column(db.Text, nullable=False)
+    date = db.Column(db.String(50), nullable=False)
+
+
+from datetime import datetime
+
+@app.route("/contact", methods=['GET', 'POST'])
+def contact():
+    if request.method == 'POST':
+        name = request.form.get('name')
+        email = request.form.get('email')
+        message = request.form.get('message')
+        date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        new_contact = Contact(name=name, email=email, message=message, date=date)
+        db.session.add(new_contact)
+        db.session.commit()
+
+        flash("Message sent successfully", "success")
+        return redirect(url_for('contact'))
+
+    return render_template("contact.html")
+
+
+
 @app.route("/")
 def home():
    
