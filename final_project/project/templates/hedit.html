@@ -14,7 +14,7 @@
  
 
 <div class="container mt-4">
-  <div class="display-4 text-center text-info">Update Hospital Data</div>
+  <div class="display-4 text-center text-info">Update Therapist Data</div>
   <br />
   <div class="row">
     <div class="col-md-4"></div>
@@ -22,7 +22,7 @@
     <div class="col-md-4">
       <div class="card">
         {% include "message.html" %}
-        <h4 class="text-center text-success">Covid Care Center</h4>
+        <h4 class="text-center text-success">Health Care Therapy Center</h4>
         <div class="card-body bg-light">
 
           <form action="/hedit/{{posts.id}}" method="post">
@@ -32,7 +32,7 @@
                 class="form-control mt-2"
                 name="hcode"
                 value={{posts.hcode}}
-                placeholder="Enter the Hospital Code"
+                placeholder="Enter the Therapist Code"
                 required
                 hidden
               />
@@ -44,7 +44,7 @@
                 class="form-control mt-2"
                 name="hname"
                 value={{posts.hname}}
-                placeholder="Enter Hospital Name"
+                placeholder="Enter Therapist Name"
                 required
               />
             </div>
@@ -54,7 +54,7 @@
                 type="number"
                 class="form-control mt-2"
                 name="normalbed"
-                placeholder="Normal Bed Available?"
+                placeholder="Behavioral Therapy Available?"
                value={{posts.normalbed}}
                 required
               />
@@ -65,7 +65,7 @@
                 class="form-control mt-2"
                 name="hicubeds"
                 value={{posts.hicubed}}
-                placeholder="H.I.C.U Bed Available?"
+                placeholder="Humanistic Therapy Available?"
                 required
               />
             </div>
@@ -76,7 +76,7 @@
                 class="form-control mt-2"
                 name="icubeds"
                 value={{posts.icubed}}
-                placeholder="I.C.U Bed Available?"
+                placeholder="Somatic Therapy Available?"
                 required
               />
             </div>
@@ -87,7 +87,7 @@
                 class="form-control mt-2"
                 name="ventbeds"
                 value={{posts.vbed}}
-                placeholder="Ventilators Bed Available?"
+                placeholder="Bioenergetic Therapy Available?"
                 required
               />
             </div>
