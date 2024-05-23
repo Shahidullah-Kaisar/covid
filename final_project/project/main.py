@@ -517,9 +517,9 @@ def slotbooking():
             res=Bookingpatient(srfid=srfid,bedtype=bedtype,hcode=hcode,spo2=spo2,pname=pname,pphone=pphone,paddress=paddress)
             db.session.add(res)
             db.session.commit()
-            flash("Slot is Booked kindly Visit Hospital for Further Procedure","success")
+            flash("Slot is Booked kindly Visit Therapy Center for Further Procedure","success")
         else:
-            flash("No beds available","danger")
+            flash("No therapies available","danger")
 
         return render_template("booking.html",query=query,query1=query1)
 
