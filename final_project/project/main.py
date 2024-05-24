@@ -469,6 +469,7 @@ def slotbooking():
         
         srfid=request.form.get('srfid')
         bedtype=request.form.get('bedtype')
+        # therapytype = request.form.get('therapytype')
         hcode=request.form.get('hcode')
         spo2=request.form.get('spo2')
         pname=request.form.get('pname')
@@ -484,7 +485,9 @@ def slotbooking():
             flash("Hospital Code not exist","warning")
             return render_template("booking.html",query=query,query1=query1)
 
-        dbb=Hospitaldata.query.filter_by(hcode=hcode).first()      
+        dbb=Hospitaldata.query.filter_by(hcode=hcode).first()  
+
+    
         
         if bedtype=="NormalBed":       
             seat = dbb.normalbed
@@ -510,7 +513,7 @@ def slotbooking():
                 dbb.vbed = seat - 1
                 db.session.commit()
         else:
-            flash("Invalid bed type","danger")
+            flash("Invalid Therapy type","danger")
             return render_template("booking.html",query=query,query1=query1)
 
         if seat > 0:
@@ -519,23 +522,14 @@ def slotbooking():
             db.session.commit()
             flash("Slot is Booked kindly Visit Hospital for Further Procedure","success")
         else:
-            flash("No beds available","danger")
+            flash("No Therapy available","danger")
 
         return render_template("booking.html",query=query,query1=query1)
 
     return render_template("booking.html",query=query,query1=query1)
 
 
-  
-
-
-
-
-
 app.run(debug=True)
-
-
-
 
 
 
