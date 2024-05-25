@@ -7,7 +7,6 @@ from werkzeug.security import generate_password_hash,check_password_hash
 
 
 
-
 from flask_login import login_required,logout_user,login_user,login_manager,LoginManager,current_user
 
 # from flask_mail import Mail
@@ -106,6 +105,35 @@ class Contact(db.Model):
     email = db.Column(db.String(100), nullable=False)
     message = db.Column(db.Text, nullable=False)
     date = db.Column(db.String(50), nullable=False)
+
+
+
+
+class Doctors(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    certificate_number = db.Column(db.String(20), unique=True)
+    name = db.Column(db.String(100))
+    status = db.Column(db.String(20)) 
+
+
+#  Doctor verification route
+
+@app.route('/verify_doctor', methods=['POST'])
+def verify_doctor():
+    data = request.json
+    certificate_number = data.get('certificate_number')
+    doctor = Doctors.query.filter_by(certificate_number=certificate_number).first()
+    if doctor:
+        return {'status': doctor.status}
+    else:
+        return {'status': 'not_found'}
+
+# Example usage of doctor verification
+@app.route('/verification', methods=['GET'])
+def verification():
+    return render_template('verification.html')
+
+
 
 
 from datetime import datetime
@@ -520,9 +548,10 @@ def slotbooking():
             res=Bookingpatient(srfid=srfid,bedtype=bedtype,hcode=hcode,spo2=spo2,pname=pname,pphone=pphone,paddress=paddress)
             db.session.add(res)
             db.session.commit()
-            flash("Slot is Booked kindly Visit Hospital for Further Procedure","success")
+            flash("Slot is Booked kindly Visit Therapy Center for Further Procedure","success")
         else:
             flash("No Therapy available","danger")
+            flash("No therapies available","danger")
 
         return render_template("booking.html",query=query,query1=query1)
 
@@ -530,6 +559,21 @@ def slotbooking():
 
 
 app.run(debug=True)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
