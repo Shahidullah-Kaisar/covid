@@ -37,6 +37,7 @@
             outline: none;
             margin-left: 465px;
             background: rgb(186, 180, 180);
+            transition: 0.5s;
         }
         #verification_result{
             margin-left: 550px;
@@ -46,14 +47,17 @@
             border-radius: 10px;
             color: rgb(155, 8, 8);
         }
+        .button:hover{
+            background: rgba(255, 217, 0, 0.787);
+        }
     </style>
 </head>
 <body>
     <div class="main">
-        <h1 class="h1">Doctor Verification</h1>
-        <label class="lebel" for="certificate_number">Enter Doctor's Certificate Number:</label> 
+        <h1 class="h1">Therapist Verification</h1>
+        <label class="lebel" for="certificate_number">Enter therapist Certificate Number:</label> 
         <input type="text" id="certificate_number" name="certificate_number"> <br>
-        <button class="button" onclick="verifyDoctor()">Verify Doctor</button>
+        <button class="button" onclick="verifyDoctor()">Verify Therapist</button>
 
     </div>
     
@@ -77,11 +81,11 @@
             .then(result => {
                 var verificationResultDiv = document.getElementById('verification_result');
                 if (result.status === 'valid') {
-                    verificationResultDiv.innerHTML = '<p>The doctor is verified as real.</p>';
+                    verificationResultDiv.innerHTML = '<p>The therapist is verified as real.</p>';
                 } else if (result.status === 'expired') {
-                    verificationResultDiv.innerHTML = '<p>The doctor is verified as fake.</p>';
+                    verificationResultDiv.innerHTML = '<p>The therapist is verified as fake.</p>';
                 } else {
-                    verificationResultDiv.innerHTML = '<p>Doctor not found.</p>';
+                    verificationResultDiv.innerHTML = '<p>Therapist not found.</p>';
                 }
             })
             .catch(error => {

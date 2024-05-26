@@ -27,6 +27,19 @@ SET time_zone = "+00:00";
 -- Table structure for table `bookingpatient`
 --
 
+CREATE TABLE doctors (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    certificate_number VARCHAR(50) UNIQUE NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    status ENUM('valid', 'expired') NOT NULL
+);
+INSERT INTO doctors (certificate_number, name, status) 
+VALUES 
+('DOC123', 'Dr. John Doe','valid'),
+('DOC456', 'Dr. Jane Smith','expired');
+
+
+
 CREATE TABLE `bookingpatient` (
   `id` int(11) NOT NULL,
   `srfid` varchar(50) NOT NULL,
