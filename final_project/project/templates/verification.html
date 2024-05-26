@@ -1,96 +1,117 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doctor Verification</title>
+    <title>Therapist Verification</title>
     <style>
-        body{
-            background: #1d6d6fb9;
+        body {
+            background-color: #4158D0;
+            background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
-        .main{
-            margin-left: 150px;
-            margin-top: 200px;
+        .container {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 400px;
         }
-        h1{
-            margin-left: 130px;
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 28px;
         }
-        .lebel{
-            margin-left: 100px;
+        label {
+            display: block;
+            margin-bottom: 15px;
+            color: #555;
+            font-size: 18px;
         }
-        input{
-            padding: 10px;
-            border: none;
-            outline: none;
-            border-radius: 5px;
-            margin-left: 10px;
-            width: 250px;
-            background: rgb(186, 182, 182);
-        }
-        .button{
-            margin-top: 20px;
-            padding: 13px;
-            font-size: 17px;
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 12px;
+            border: 1px solid #ddd;
             border-radius: 10px;
-            border: none;
+            margin-bottom: 25px;
             outline: none;
-            margin-left: 465px;
-            background: rgb(186, 180, 180);
-            transition: 0.5s;
+            background: #f9f9f9;
+            font-size: 16px;
         }
-        #verification_result{
-            margin-left: 550px;
-            margin-top: 10px;
-            font-size: 30px;
-            /* border: 2px gold solid; */
+        .button {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            border: none;
             border-radius: 10px;
-            color: rgb(155, 8, 8);
+            background-color: #ff6f61;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
-        .button:hover{
-            background: rgba(255, 217, 0, 0.787);
+        .button:hover {
+            background-color: #ff9a8b;
+        }
+        #verification_result {
+            margin-top: 30px;
+            font-size: 18px;
+            color: #333;
+        }
+        .result-valid {
+            color: green;
+            font-weight: bold;
+        }
+        .result-expired {
+            color: orange;
+            font-weight: bold;
+        }
+        .result-not-found {
+            color: red;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <div class="main">
-        <h1 class="h1">Therapist Verification</h1>
-        <label class="lebel" for="certificate_number">Enter therapist Certificate Number:</label> 
-        <input type="text" id="certificate_number" name="certificate_number"> <br>
+    <div class="container">
+        <h1>Therapist Verification</h1>
+        <!-- <label for="certificate_number">Enter Therapist Certificate Number:</label> -->
+        <input type="text" id="certificate_number" name="certificate_number" placeholder="Certificate Number">
+        <!-- <label for="therapist_code">Enter Therapist Code:</label> -->
+        <input type="text" id="therapist_code" name="therapist_code" placeholder="Therapist Code">
         <button class="button" onclick="verifyDoctor()">Verify Therapist</button>
-
+        <div id="verification_result"></div>
     </div>
-    
-    <div id="verification_result"></div>
 
     <script>
-        function verifyDoctor() {
-            var certificateNumber = document.getElementById('certificate_number').value;
-            var data = {
-                certificate_number: certificateNumber
-            };
-
-            fetch('/verify_doctor', {
+        async function verifyDoctor() {
+            const certificateNumber = document.getElementById('certificate_number').value;
+            const therapistCode = document.getElementById('therapist_code').value;
+            const response = await fetch('/verify_doctor', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(data)
-            })
-            .then(response => response.json())
-            .then(result => {
-                var verificationResultDiv = document.getElementById('verification_result');
-                if (result.status === 'valid') {
-                    verificationResultDiv.innerHTML = '<p>The therapist is verified as real.</p>';
-                } else if (result.status === 'expired') {
-                    verificationResultDiv.innerHTML = '<p>The therapist is verified as fake.</p>';
-                } else {
-                    verificationResultDiv.innerHTML = '<p>Therapist not found.</p>';
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
+                body: JSON.stringify({ certificate_number: certificateNumber, therapist_code: therapistCode })
             });
+
+            const result = await response.json();
+            const verificationResultDiv = document.getElementById('verification_result');
+
+            if (result.status === 'valid') {
+                verificationResultDiv.innerHTML = `<p class="result-valid">The therapist ${result.name} is verified as real.</p>`;
+            } else if (result.status === 'expired') {
+                verificationResultDiv.innerHTML = `<p class="result-expired">The therapist ${result.name}'s certificate has expired.</p>`;
+            } else {
+                verificationResultDiv.innerHTML = '<p class="result-not-found">Therapist not found.</p>';
+            }
         }
     </script>
 </body>

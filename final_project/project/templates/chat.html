@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Verification</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #eef2f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .container h1 {
+            color: #333333;
+            margin-bottom: 20px;
+        }
+        .container input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .container button {
+            width: 100%;
+            padding: 15px;
+            background-color: #28a745;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .container button:hover {
+            background-color: #218838;
+        }
+        .output {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+            font-size: 16px;
+            color: #333333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Verify Certificate</h1>
+        <input type="text" id="certificateNumber" placeholder="Enter Certificate Number">
+        <button onclick="verifyCertificate()">Verify</button>
+        <div id="output" class="output" style="display:none;"></div>
+    </div>
+
+    <script>
+        function verifyCertificate() {
+            var certNumber = document.getElementById('certificateNumber').value;
+            var outputDiv = document.getElementById('output');
+
+            if(certNumber) {
+                // Simulate certificate verification logic
+                // Replace this with your actual logic
+                outputDiv.innerHTML = 'Verifying certificate number: ' + certNumber;
+                outputDiv.style.display = 'block';
+            } else {
+                outputDiv.innerHTML = 'Please enter a certificate number';
+                outputDiv.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>

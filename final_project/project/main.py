@@ -1,4 +1,4 @@
-from flask import Flask, json,redirect,render_template,flash,request
+from flask import Flask, json,jsonify,redirect,render_template,flash,request
 from flask.globals import request, session
 from flask.helpers import url_for
 from flask_sqlalchemy import SQLAlchemy
@@ -114,6 +114,7 @@ class Doctors(db.Model):
     certificate_number = db.Column(db.String(20), unique=True)
     name = db.Column(db.String(100))
     status = db.Column(db.String(20)) 
+    therapist_code=db.Column(db.String(20), unique=True)
 
 
 #  Doctor verification route
@@ -122,17 +123,16 @@ class Doctors(db.Model):
 def verify_doctor():
     data = request.json
     certificate_number = data.get('certificate_number')
-    doctor = Doctors.query.filter_by(certificate_number=certificate_number).first()
+    therapist_code = data.get('therapist_code')
+    doctor = Doctors.query.filter_by(certificate_number=certificate_number, therapist_code=therapist_code).first()
     if doctor:
-        return {'status': doctor.status}
+        return jsonify({'status': doctor.status, 'name': doctor.name})
     else:
-        return {'status': 'not_found'}
+        return jsonify({'status': 'not_found', 'name': ''})
 
-# Example usage of doctor verification
-@app.route('/verification', methods=['GET'])
+@app.route('/admin/verification', methods=['GET'])
 def verification():
     return render_template('verification.html')
-
 
 
 
