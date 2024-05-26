@@ -38,7 +38,7 @@ VALUES
 ('DOC123', 'Dr. John Doe','valid'),
 ('DOC456', 'Dr. Jane Smith','expired');
 
-
+ALTER TABLE doctors ADD COLUMN therapist_code VARCHAR(255);
 
 CREATE TABLE `bookingpatient` (
   `id` int(11) NOT NULL,
